@@ -1,0 +1,55 @@
+<div class="container">
+	<div class="row">
+		<div class="col-lg-12">
+			<div class="page-header">
+			  <h1>NETWORKS <small>Openstack Network Client </small></h1>
+			  <button class="btn btn-primary" (click)="createNetwork()">Nova Rede</button>
+			 </div>
+			
+			<table *ngIf="networks.length > 0" class="table table-striped">
+				<thead>
+					<tr>
+						<th>Nome de Rede</th>
+						<th>Sub-redes associadas</th>
+						<th>Compartilhada</th>
+						<th>Estado</th>
+						<th>Estado de Admin</th>
+					</tr>
+				</thead>
+				<tbody>
+					<ng-container *ngFor="let network of networks">
+							<tr>
+								<td>{{network.name}}</td>
+								<td>
+									<ng-container *ngFor="let subnet of subnets">
+										<ng-container *ngIf="network.id == subnet.networkId">
+											{{subnet.name}} GW: {{subnet.gatewayIp}}
+											<br>
+										</ng-container>
+									</ng-container>
+								</td>
+								<td *ngIf="network.shared == 0">
+									Não
+								</td>
+								<td *ngIf="network.shared != 0">
+									Sim
+								</td>
+								<td *ngIf="network.status == 'ACTIVE'"> 
+									Ativa
+								</td>
+								<td *ngIf="network.status != 'ACTIVE'"> 
+									Inativa
+								</td>
+								<td *ngIf="network.adminStateUp == true">
+									UP
+								</td>
+								<td *ngIf="network.adminStateUp != true">
+									DOWN
+								</td>
+							</tr>
+					</ng-container>
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>

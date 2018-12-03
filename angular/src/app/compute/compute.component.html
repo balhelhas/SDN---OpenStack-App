@@ -1,0 +1,59 @@
+<div class="container">
+	<div class="row">
+		<div class="col-lg-12">
+			<div class="page-header">
+			    <h1>INSTANCES <small>Openstack Compute Client </small></h1>
+				<button class="btn btn-primary" (click)="createInstance()">Nova Instância</button>
+			</div>
+			<table *ngIf="servers.length != 0" class="table table-striped">
+				<thead>
+					<tr>
+						<th>Nome da Instância</th>
+						<th>Endereço IP</th>
+						<th>Flavor</th>
+						<th>Estado</th>
+						<th>Opções</th>
+					</tr>
+				</thead>
+				<tbody>
+					<ng-container *ngFor="let server of servers">
+						<tr>
+							<td>{{server.name}}</td>
+							<td>
+								<ng-container *ngFor="let ip of server.addresses.private">
+									{{ip}}
+								</ng-container>
+							</td>
+							<td>
+								<ng-container *ngFor="let flavor of flavors">
+									<ng-container *ngIf="server.flavorId == flavor.id">
+										{{flavor.name}}
+									</ng-container>
+								</ng-container>
+							</td>
+							<td *ngIf="server.status == 'RUNNING'">
+								Ativa
+							</td>
+							<td *ngIf="server.status == 'REBOOT'">
+								Reiniciando
+							</td>
+							<td *ngIf="server.status == 'STOPPED'">
+								Inativa
+							</td>
+							<td *ngIf="server.status == 'PROVISIONING'">
+								A processar
+							</td>
+							<td *ngIf="server.status == 'ERROR'">
+								Erro
+							</td>
+							<td>
+								<button class="btn btn-warning" (click)="rebootInstance(server.id)">Reiniciar</button>
+								<button class="btn btn-danger" (click)="deleteInstance(server.id)">Remover</button>
+							</td>
+						</tr>
+					</ng-container>
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>

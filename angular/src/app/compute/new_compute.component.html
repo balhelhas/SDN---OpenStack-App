@@ -1,0 +1,62 @@
+<div class="container">
+	<div class="row">
+		<div class="col-lg-12">
+			<div class="panel panel-default">
+		        <div class="panel-heading">
+		          <h3 class="panel-title">Nova Instância</h3>
+		        </div>
+		        <div class="panel-body">
+		          <div class="col-lg-12">
+		            <form (ngSubmit)="createCompute()" #newServerForm="ngForm" class="form-horizontal">
+			            <div class="form-group">
+			            	<label for="instanceName">Nome da Instância: </label>
+			            	<input type="text" class="form-control" id="instanceName" name="instanceName" required [(ngModel)]="server.name" #instanceName="ngModel">
+			            	<div *ngIf="instanceName.errors && (instanceName.dirty || instanceName.touched)" class="alert alert-danger">
+			            		<div [hidden]="!instanceName.errors.required">
+			                    	Nome da instância é obrigatório!
+			                    </div>
+			            	</div>
+						</div>
+						<div class="form-group">
+			            	<label for="instanceImage">Imagem: </label>
+			            	<select class="form-control"  id="instanceImage" name="instanceImage" required [(ngModel)]="server.image" #instanceImage="ngModel">
+							  <option *ngFor="let image of images" [value]="image.id">{{image.name}}</option>
+							</select>
+			            	<div *ngIf="instanceImage.errors && (instanceImage.dirty || instanceImage.touched)" class="alert alert-danger">
+			            		<div [hidden]="!instanceImage.errors.required">
+			                    	A imagem é obrigatória!
+			                    </div>
+			            	</div>
+						</div>
+						<div class="form-group">
+			            	<label for="instanceFlavor">Flavor: </label>
+			            	<select class="form-control" id="instanceFlavor" name="instanceFlavor" required [(ngModel)]="server.flavor" #instanceFlavor="ngModel">
+							  <option *ngFor="let flavor of flavors" [value]="flavor.id">{{flavor.name}}</option>
+							</select>
+			            	<div *ngIf="instanceFlavor.errors && (instanceFlavor.dirty || instanceFlavor.touched)" class="alert alert-danger">
+			            		<div [hidden]="!instanceFlavor.errors.required">
+			                    	Nome da sub-rede é obrigatório!
+			                    </div>
+			            	</div>
+						</div>
+						<div class="form-group">
+			            	<label for="instanceNetwork">Rede: </label>
+			            	<select class="form-control" id="instanceNetwork" name="instanceNetwork" required [(ngModel)]="server.networkId" #instanceNetwork="ngModel">
+							  <option *ngFor="let network of networks" [value]="network.id">{{network.name}}</option>
+							</select>
+			            	<div *ngIf="instanceNetwork.errors && (instanceNetwork.dirty || instanceNetwork.touched)" class="alert alert-danger">
+			            		<div [hidden]="!instanceNetwork.errors.required">
+			                    	Nome da sub-rede é obrigatório!
+			                    </div>
+			            	</div>
+						</div>
+						<div class="form-group">
+			            	<button type="submit" class="btn btn-success" [disabled]="!newServerForm.form.valid">Adicionar</button>
+			            	<button class="btn btn-danger" routerLinkActivate="active" routerLink="/networks">Cancelar</button>
+			            </div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
